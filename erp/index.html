@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FINANSYS — Client Login</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#0E1422">
+  <link rel="icon" type="image/png" href="favicon-64.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --navy:#182132; --deep:#0E1422; --ivory:#E8E2D8; --gold:#A88C6E; --gold-hi:#B99D80;
+            --muted:#A3A9B4; --line:rgba(232,226,216,.14); }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: Inter, system-ui, sans-serif; color: var(--ivory); background: var(--deep);
+           background-image: radial-gradient(60% 50% at 50% 0%, rgba(168,140,110,.14), transparent 70%);
+           display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .card { width: 100%; max-width: 380px; background: var(--navy); border: 1px solid var(--line);
+            border-radius: 18px; padding: 36px 32px; box-shadow: 0 24px 60px rgba(0,0,0,.35); }
+    .brand { text-align: center; margin-bottom: 28px; }
+    .brand img { width: 56px; height: 56px; }
+    .brand h1 { margin: 10px 0 0; font-size: 20px; letter-spacing: .22em; font-weight: 600; }
+    .brand h1 span { color: var(--gold); }
+    .brand p { margin: 6px 0 0; font-size: 13px; color: var(--muted); }
+    label { display: block; font-size: 12px; color: var(--muted); margin: 16px 0 6px; }
+    input { width: 100%; padding: 12px 14px; font: inherit; color: var(--ivory); background: var(--deep);
+            border: 1px solid var(--line); border-radius: 10px; outline: none; }
+    input:focus { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(168,140,110,.22); }
+    button { width: 100%; margin-top: 24px; padding: 13px; font: inherit; font-weight: 600; cursor: pointer;
+             color: var(--deep); background: var(--ivory); border: 0; border-radius: 999px; }
+    button:hover { background: #fff; }
+    .back { display: block; text-align: center; margin-top: 20px; font-size: 12px; color: var(--muted); text-decoration: none; }
+    .back:hover { color: var(--gold-hi); }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand">
+      <img src="finansys-mark.png" alt="FINANSYS logo">
+      <h1>FINAN<span>SYS</span></h1>
+      <p>Client login</p>
+    </div>
+
+    <!-- Set action to your ERP's login endpoint (e.g. https://erp.finansys.com.co/login). -->
+    <form id="login" method="post" action="/login" autocomplete="on">
+      <label for="username">Username</label>
+      <input id="username" name="username" type="text" autocomplete="username" required autofocus>
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button type="submit">Sign in</button>
+    </form>
+
+    <a class="back" href="https://finansys.com.co">← Back to finansys.com.co</a>
+  </main>
+</body>
+</html>

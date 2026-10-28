@@ -17,7 +17,7 @@ window.SITE = {
   },
 
   nav: {
-    login: { label: "Client login", href: "#" },
+    login: { label: "Client login", href: "https://erp.finansys.com.co" },
     cta:   { label: "Book a consultation", href: "#cta" },
   },
 
