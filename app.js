@@ -481,7 +481,17 @@
   const HV = ST.heroMode === "video" ? ST.heroVideo : null;
   const vrig = HV && $(".video-rig"), vcan = HV && $(".video-canvas"), vctx = HV && vcan.getContext("2d");
   const frames = HV ? new Array(HV.count) : [];
-  let vFrame = 0, vDrawn = -1, vFit = null;
+  let vFrame = 0, vTarget = 0, vRaf = 0, vDrawn = -1, vFit = null;
+  // the shown frame glides toward the scroll-driven target (frame-rate independent), so fast wheel flicks don't skip frames
+  let vLast = 0;
+  function vStep(now) {
+    vRaf = 0;
+    const dt = Math.min(64, now - (vLast || now - 16)); vLast = now;
+    const k = reduce ? 1 : 1 - Math.exp(-dt / 70), d = vTarget - vFrame;
+    vFrame = Math.abs(d) < .004 ? vTarget : vFrame + d * k;
+    drawVideo(false);
+    if (vFrame !== vTarget) vRaf = requestAnimationFrame(vStep); else vLast = 0;
+  }
   if (HV) {
     heroEl.classList.add("video-mode");
     // pick the frame set for this screen: the 1920px set on large / high-DPI screens, the 1024px set on phones
@@ -491,7 +501,9 @@
       if (frames[i]) return res();
       const im = new Image();
       im.decoding = "async";
-      im.onload = () => { frames[i] = im; if (Math.abs(i - vFrame) < 3) drawVideo(true); res(); };
+      const done = src => { frames[i] = src; if (Math.abs(i - vFrame) < 3) drawVideo(true); res(); };
+      // decode up front (ImageBitmap) so the first draw of a frame never stalls the scroll
+      im.onload = () => window.createImageBitmap ? createImageBitmap(im).then(done, () => done(im)) : done(im);
       im.onerror = res;
       im.src = url(i);
     });
@@ -529,7 +541,7 @@
     let img = frames[i];
     for (let d = 1; !img && d < HV.count; d++) img = frames[i - d] || frames[i + d];
     const next = frac > .02 ? frames[i + 1] : null;
-    const key = i + (next ? Math.round(frac * 20) / 20 : 0);
+    const key = i + (next ? Math.round(frac * 64) / 64 : 0);
     if (!img || (!force && vDrawn === key)) return;
     vDrawn = key;
     const { dpr, x, y, w, h, vw, vh } = vFit, c = vctx;
@@ -566,8 +578,8 @@
       // slow push-in gets the first stretch of scroll, the turn + document swirl the rest
       const st = HV.settle || 0, last = HV.count - 1;
       const f = p < .1 ? (p / .1) * st : st + seg(p, .1, .42) * (last - st);
-      vFrame = clamp(f, 0, last);
-      drawVideo(false);
+      vTarget = clamp(f, 0, last);
+      if (frozen !== null) { vFrame = vTarget; drawVideo(false); } else if (!vRaf) vRaf = requestAnimationFrame(vStep);
       vrig.style.opacity = 1 - seg(p, .41, .47);
     }
     if (window.Laptop3D) window.Laptop3D.update(p);

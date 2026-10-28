@@ -40,7 +40,7 @@ window.SITE = {
     heroMode: "video",
     // "video" = scroll-scrubbed frames from the brand film (frames 1–143: desk → laptop turns → documents swirl)
     heroVideo: {
-      frames: "assets/hero-hd/{w}/f_{n}.webp",   // remastered HD frames; {w} = 1920 (desktop) or 1024 (phones)  // {n} → 001, 002, … (new intro clip spliced into the swirl)
+      frames: "assets/hero-hd/{w}/f_{n}.webp?v=cool1",   // remastered HD frames; {w} = 1920 (desktop) or 1024 (phones)  // {n} → 001, 002, … (new intro clip spliced into the swirl)
       count: 141,
       size: [1280, 620],                         // frame width, height (px)
       laptop: { top: 0.38, bottom: 0.92, width: 0.36, centerX: 0.5 },  // laptop in frame 1, as fractions
