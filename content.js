@@ -38,13 +38,13 @@ window.SITE = {
     // "photo" = real photographed laptop with the app mapped onto its screen (docs3d.js)
     // "3d"    = real-time 3D laptop over heroImage (laptop3d.js)
     heroMode: "video",
-    // "video" = scroll-scrubbed frames from the brand film (frames 1–143: desk → laptop turns → documents swirl)
+    // "video" = scroll-scrubbed frames from the brand film (frames 1–419, 3× motion-interpolated: desk → laptop turns → documents swirl)
     heroVideo: {
-      frames: "assets/hero-hd/{w}/f_{n}.webp?v=cool1",   // remastered HD frames; {w} = 1920 (desktop) or 1024 (phones)  // {n} → 001, 002, … (new intro clip spliced into the swirl)
-      count: 141,
+      frames: "assets/hero-hd/{w}/f_{n}.webp?v=hd3",   // remastered HD frames; {w} = 1920 (desktop) or 1024 (phones)  // {n} → 001, 002, … (new intro clip spliced into the swirl)
+      count: 419,
       size: [1280, 620],                         // frame width, height (px)
       laptop: { top: 0.38, bottom: 0.92, width: 0.36, centerX: 0.5 },  // laptop in frame 1, as fractions
-      settle: 48,                                // first ~2s are the still desk shot; they get a shorter scroll
+      settle: 144,                               // first ~2s are the still desk shot; they get a shorter scroll
     },
     heroPhoto: {
       src: "https://images.unsplash.com/photo-1779444480590-9bf6f021d5d4?auto=format&fit=crop&w=2400&q=85",

@@ -501,7 +501,7 @@
       if (frames[i]) return res();
       const im = new Image();
       im.decoding = "async";
-      const done = src => { frames[i] = src; if (Math.abs(i - vFrame) < 3) drawVideo(true); res(); };
+      const done = src => { frames[i] = src; if (Math.abs(i - vFrame) < 6) drawVideo(true); res(); };
       // decode up front (ImageBitmap) so the first draw of a frame never stalls the scroll
       im.onload = () => window.createImageBitmap ? createImageBitmap(im).then(done, () => done(im)) : done(im);
       im.onerror = res;
@@ -510,7 +510,7 @@
     // progressive: first frame, then coarse → fine passes so scrubbing works before everything arrives
     (async () => {
       await load(0);
-      for (const step of [16, 8, 4, 2, 1]) {
+      for (const step of [48, 24, 12, 6, 3, 1]) {
         const batch = [];
         for (let i = 0; i < HV.count; i += step) batch.push(load(i));
         await Promise.all(batch);
